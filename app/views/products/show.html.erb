@@ -1,5 +1,24 @@
 <h1><%= @product.name %></h1>
-
+<p>
+  <strong>Category:</strong>
+  <%= @product.product_category.name %>
+</p>
+<p>
+  <strong>SKU:</strong>
+  <%= @product.sku %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+<p>
+  <strong>Price:</strong>
+  <%= number_to_currency(@product.price) %>
+</p>
+<p>
+  <strong>Quantity:</strong>
+  <%= @product.quantity %>
+</p>
 <%= link_to "Back", products_path %>
 <%= link_to "Edit", edit_product_path(@product) %>
 <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" } %>

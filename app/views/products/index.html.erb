@@ -7,14 +7,14 @@
     <% @products.each do |product| %>
       <div>
         <strong><%= link_to product.name, product %></strong>
-        <% if product.product_category %>
-          <span>Category: <%= product.product_category.name %></span>
-        <% else %>
-          <span>Category: Not Assigned</span>
-        <% end %>
+        <p>Category: <%= product.product_category.name %></p>
+        <p>SKU: <%= product.sku %></p>
+        <p>Price: <%= number_to_currency(product.price) %></p>
+        <p>Quantity: <%= product.quantity %></p>
       </div>
     <% end %>
   <% else %>
     <p>No products available.</p>
   <% end %>
 </div>
+

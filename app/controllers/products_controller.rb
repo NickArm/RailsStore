@@ -34,12 +34,16 @@ class ProductsController < ApplicationController
   end
 
   def update
+    @product = Product.find(params[:id])
+    @categories = ProductCategory.all
+  
     if @product.update(product_params)
-      redirect_to @product
+      redirect_to @product, notice: 'Product was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
   end
+  
 
   def destroy
     @product.destroy
@@ -52,6 +56,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :product_category_id)
+      params.require(:product).permit(:name, :product_category_id, :sku, :description, :price, :quantity)
     end
 end

@@ -1,11 +1,33 @@
 <%= form_with model: product do |form| %>
     <div>
       <%= form.label :name %>
+         <%= form.text_field :name %>
+    </div>
       <div class="field">
         <%= form.label :product_category_id, "Category" %>
         <%= form.collection_select :product_category_id, @categories, :id, :name, prompt: "Select a category" %>
     </div>
-      <%= form.text_field :name %>
+    <div class="field">
+        <%= form.label :sku, "SKU" %>
+        <%= form.text_field :sku %>
+        </div>
+
+        <div class="field">
+        <%= form.label :description, "Description" %>
+        <%= form.text_area :description %>
+        </div>
+
+        <div class="field">
+        <%= form.label :price, "Price" %>
+        <%= form.number_field :price, step: 0.01 %>
+        </div>
+
+        <div class="field">
+        <%= form.label :quantity, "Quantity" %>
+        <%= form.number_field :quantity %>
+        </div>
+    <div>
+   
     </div>
   
     <div>
