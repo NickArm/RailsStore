@@ -1,0 +1,22 @@
+<h1>Tags</h1>
+<%= link_to 'New Tag', new_tag_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+      <tr>
+        <td><%= tag.name %></td>
+        <td>
+          <%= link_to 'Edit', edit_tag_path(tag) %> |
+          <%= link_to 'Delete', tag, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

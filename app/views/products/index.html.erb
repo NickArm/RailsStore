@@ -8,6 +8,12 @@
       <div>
         <strong><%= link_to product.name, product %></strong>
         <p>Category: <%= product.product_category.name %></p>
+         <p>Tags: <%= product.tags.map(&:name).join(", ") %></p>
+         <% if product.main_photo.attached? %>
+         <%= image_tag product.main_photo, size: "300x300" %>
+       <% else %>
+         <p>No photo available</p>
+       <% end %>
         <p>SKU: <%= product.sku %></p>
         <p>Price: <%= number_to_currency(product.price) %></p>
         <p>Quantity: <%= product.quantity %></p>

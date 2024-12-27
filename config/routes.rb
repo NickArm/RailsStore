@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :products
   resources :product_categories, only: [:index, :new, :create]
+  resources :tags
+
 
 
 

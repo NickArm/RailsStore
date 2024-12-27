@@ -1,8 +1,21 @@
 <h1><%= @product.name %></h1>
 <p>
+  <% if @product.main_photo.attached? %>
+    <%= image_tag @product.main_photo, size: "300x300" %>
+  <% else %>
+    <p>No photo available</p>
+  <% end %>
+</p>
+
+<p>
   <strong>Category:</strong>
   <%= @product.product_category.name %>
 </p>
+<p>
+  <strong>Tags:</strong>
+  <%= @product.tags.map(&:name).join(", ") %>
+</p>
+
 <p>
   <strong>SKU:</strong>
   <%= @product.sku %>

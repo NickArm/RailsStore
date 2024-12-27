@@ -3,10 +3,19 @@
       <%= form.label :name %>
          <%= form.text_field :name %>
     </div>
+    <div class="field">
+  <%= form.label :main_photo, "Main Photo" %>
+  <%= form.file_field :main_photo %>
+</div>
       <div class="field">
         <%= form.label :product_category_id, "Category" %>
         <%= form.collection_select :product_category_id, @categories, :id, :name, prompt: "Select a category" %>
     </div>
+    <div class="field">
+    <%= form.label :tag_ids, "Tags" %>
+    <%= form.collection_select :tag_ids, Tag.all, :id, :name, {}, multiple: true %>
+    </div>
+
     <div class="field">
         <%= form.label :sku, "SKU" %>
         <%= form.text_field :sku %>
