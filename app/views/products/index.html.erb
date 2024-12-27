@@ -1,0 +1,20 @@
+<h1>Products</h1>
+
+<%= link_to "New product", new_product_path %>
+
+<div id="products">
+  <% if @products.any? %>
+    <% @products.each do |product| %>
+      <div>
+        <strong><%= link_to product.name, product %></strong>
+        <% if product.product_category %>
+          <span>Category: <%= product.product_category.name %></span>
+        <% else %>
+          <span>Category: Not Assigned</span>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No products available.</p>
+  <% end %>
+</div>
