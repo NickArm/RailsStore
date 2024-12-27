@@ -1,46 +1,46 @@
-<%= form_with model: product do |form| %>
-    <div>
-      <%= form.label :name %>
-         <%= form.text_field :name %>
-    </div>
-    <div class="field">
-  <%= form.label :main_photo, "Main Photo" %>
-  <%= form.file_field :main_photo %>
-</div>
-      <div class="field">
-        <%= form.label :product_category_id, "Category" %>
-        <%= form.collection_select :product_category_id, @categories, :id, :name, prompt: "Select a category" %>
-    </div>
-    <div class="field">
-    <%= form.label :tag_ids, "Tags" %>
-    <%= form.collection_select :tag_ids, Tag.all, :id, :name, {}, multiple: true %>
-    </div>
+<%= form_with model: product, local: true, class: "container mt-5" do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
 
-    <div class="field">
-        <%= form.label :sku, "SKU" %>
-        <%= form.text_field :sku %>
-        </div>
+  <div class="mb-3">
+    <%= form.label :main_photo, "Main Photo", class: "form-label" %>
+    <%= form.file_field :main_photo, class: "form-control" %>
+  </div>
 
-        <div class="field">
-        <%= form.label :description, "Description" %>
-        <%= form.text_area :description %>
-        </div>
+  <div class="mb-3">
+    <%= form.label :product_category_id, "Category", class: "form-label" %>
+    <%= form.collection_select :product_category_id, @categories, :id, :name, { prompt: "Select a category" }, class: "form-select" %>
+  </div>
 
-        <div class="field">
-        <%= form.label :price, "Price" %>
-        <%= form.number_field :price, step: 0.01 %>
-        </div>
+  <div class="mb-3">
+    <%= form.label :tag_ids, "Tags", class: "form-label" %>
+    <%= form.collection_select :tag_ids, Tag.all, :id, :name, { include_hidden: false }, { class: "form-select", multiple: true } %>
+  </div>
 
-        <div class="field">
-        <%= form.label :quantity, "Quantity" %>
-        <%= form.number_field :quantity %>
-        </div>
-    <div>
-   
-    </div>
-  
-    <div>
-      <%= form.submit %>
-    </div>
-  <% end %>
-  
+  <div class="mb-3">
+    <%= form.label :sku, "SKU", class: "form-label" %>
+    <%= form.text_field :sku, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Description", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price, "Price", class: "form-label" %>
+    <%= form.number_field :price, step: 0.01, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :quantity, "Quantity", class: "form-label" %>
+    <%= form.number_field :quantity, class: "form-control" %>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <%= link_to "Back to Products", products_path, class: "btn btn-secondary" %>
+    <%= form.submit "Save Product", class: "btn btn-primary" %>
+  </div>
+<% end %>

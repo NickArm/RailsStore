@@ -2,25 +2,25 @@
 
 <%= link_to "New product", new_product_path %>
 
-<div id="products">
-  <% if @products.any? %>
+<div class="container mt-5">
+  <h1 class="text-center text-primary">Products</h1>
+  <div class="row">
     <% @products.each do |product| %>
-      <div>
-        <strong><%= link_to product.name, product %></strong>
-        <p>Category: <%= product.product_category.name %></p>
-         <p>Tags: <%= product.tags.map(&:name).join(", ") %></p>
-         <% if product.main_photo.attached? %>
-         <%= image_tag product.main_photo, size: "300x300" %>
-       <% else %>
-         <p>No photo available</p>
-       <% end %>
-        <p>SKU: <%= product.sku %></p>
-        <p>Price: <%= number_to_currency(product.price) %></p>
-        <p>Quantity: <%= product.quantity %></p>
+      <div class="col-md-4">
+        <div class="card mb-3">
+          <%= image_tag product.main_photo, class: "card-img-top", alt: product.name if product.main_photo.attached? %>
+          <div class="card-body">
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text"><%= product.description %></p>
+            <p class="card-text">
+              <strong>Price:</strong> <%= number_to_currency(product.price) %>
+            </p>
+            <%= link_to "View Product", product_path(product), class: "btn btn-primary" %>
+          </div>
+        </div>
       </div>
     <% end %>
-  <% else %>
-    <p>No products available.</p>
-  <% end %>
+  </div>
 </div>
+
 
