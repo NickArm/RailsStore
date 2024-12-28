@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= content_for(:title) || "Store" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,36 +25,32 @@
 
 
   </head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+  <%= link_to "Admin Dashboard", admin_products_path, class: "navbar-brand" %>
+  <%= button_to "Log out", admin_root_path, method: :delete, class: "btn btn-danger" %>
+</nav>
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div class="bg-light border-end" id="sidebar" style="min-width: 200px; height: 100vh;">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= link_to "All Products", admin_products_path, class: "text-decoration-none" %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to "All Categories", admin_product_categories_path, class: "text-decoration-none" %>
+        </li>
+        <li class="list-group-item">
+          <%= link_to "All Tags", admin_tags_path, class: "text-decoration-none" %>
+        </li>
+      </ul>
+    </div>
 
 
-  
-  <body>
-  <% if flash[:notice] %>
-  <div class="alert alert-success"><%= flash[:notice] %></div>
-<% elsif flash[:alert] %>
-  <div class="alert alert-danger"><%= flash[:alert] %></div>
-<% end %>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <%= link_to "Home", root_path, class: "navbar-brand" %>
-    <div class="ml-auto">
-      <% if current_user %>
-        <% if current_user.admin? %>
-          <%= link_to "Admin Dashboard", admin_products_path, class: "btn btn-secondary me-2" %>
-        <% end %>
-        <%= button_to "Log out", session_path, method: :delete, class: "btn btn-danger" %>
-      <% else %>
-        <%= link_to "Log in", new_session_path, class: "btn btn-primary" %>
-      <% end %>
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4">
+      <%= yield %>
     </div>
   </div>
-</nav>
-
-
-
-    <main>
-      <%= yield %>
-    </main>
-  </body>
+</body>
 </html>

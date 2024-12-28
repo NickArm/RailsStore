@@ -16,12 +16,6 @@
       <p><strong>Description:</strong> <%= @product.description.presence || "No description available" %></p>
       <p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
       <p><strong>Quantity:</strong> <%= @product.quantity %></p>
-
-      <div class="mt-4">
-        <%= link_to "Back to Products", products_path, class: "btn btn-secondary me-2" %>
-        <%= link_to "Edit Product", edit_product_path(@product), class: "btn btn-primary me-2" %>
-        <%= button_to "Delete Product", @product, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
-      </div>
     </div>
   </div>
 </div>

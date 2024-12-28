@@ -1,0 +1,23 @@
+<h1>All Tags</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+      <tr>
+        <td><%= tag.name %></td>
+        <td>
+          <%= link_to "Edit", edit_admin_tag_path(tag), class: "btn btn-sm btn-primary" %>
+          <%= link_to "Delete", admin_tag_path(tag), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New Tag", new_admin_tag_path, class: "btn btn-success" %>

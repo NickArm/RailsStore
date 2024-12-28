@@ -1,0 +1,12 @@
+<h1>Edit Category</h1>
+
+<%= form_with model: [:admin, @category], local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, "Category Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit "Update Category", class: "btn btn-primary" %>
+    <%= link_to "Back", admin_product_categories_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

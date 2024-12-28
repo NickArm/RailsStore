@@ -1,0 +1,12 @@
+<h1>Edit Tag</h1>
+
+<%= form_with model: [:admin, @tag], local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, "Tag Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+  <div>
+    <%= form.submit "Update Tag", class: "btn btn-primary" %>
+    <%= link_to "Back", admin_tags_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
