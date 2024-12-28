@@ -12,7 +12,7 @@
           <h5 class="card-title">
             <%= link_to product.name, product_path(product), class: "text-decoration-none" %>
           </h5>
-          <p class="card-text"><%= product.description.presence || "No description available" %></p>
+          <p class="card-text"><%= product.product_category.name %></p>
           <p class="card-text"><strong>Price:</strong> <%= number_to_currency(product.price) %></p>
           <!-- See More Button -->
           <%= link_to "See More", product_path(product), class: "btn btn-primary" %>

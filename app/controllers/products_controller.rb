@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @similar_products = Product.where(product_category: @product.product_category).where.not(id: @product.id).order("RANDOM()").limit(3)
   end
   
 
