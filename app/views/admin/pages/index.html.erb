@@ -1,0 +1,21 @@
+<h1>Pages</h1>
+<%= link_to "New Page", new_admin_page_path, class: "btn btn-primary" %>
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <td><%= page.title %></td>
+        <td>
+          <%= link_to "Edit", edit_admin_page_path(page), class: "btn btn-warning btn-sm" %>
+          <%= button_to "Delete", admin_page_path(page), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

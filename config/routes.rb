@@ -9,14 +9,16 @@ Rails.application.routes.draw do
   resources :products, only: [:index, :show]
   resources :tags, only: [:index, :show]
   resources :product_categories, only: [:index, :show]
+  resources :pages
 
   # Admin namespace
   namespace :admin do
-    root "products#index" # Change from sessions#new if you want this to be the main page
+    root "products#index"
     resource :session, only: [:new, :create, :destroy]
     resources :products
     resources :product_categories
     resources :tags
+    resources :pages
   end
 
   # Health check

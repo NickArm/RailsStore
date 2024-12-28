@@ -1,0 +1,16 @@
+<h1><%= action_name.capitalize %> Page</h1>
+
+<%= form_with model: @page, url: admin_pages_path, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, class: "form-label" %>
+    <%= form.rich_text_area :content, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Save Page", class: "btn btn-primary" %>
+  <%= link_to "Back", admin_pages_path, class: "btn btn-secondary" %>
+<% end %>
