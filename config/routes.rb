@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # Public resources
   resources :products, only: [:index, :show]
   resources :tags, only: [:index, :show]
-  resources :product_categories, only: [:index]
+  resources :product_categories, only: [:index, :show]
 
   # Admin namespace
   namespace :admin do

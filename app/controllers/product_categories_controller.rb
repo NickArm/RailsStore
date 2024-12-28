@@ -3,8 +3,13 @@ class ProductCategoriesController < ApplicationController
       @categories = ProductCategory.all
     end
   
-    private
+
   
+    def show
+      @category = ProductCategory.find(params[:id])
+      @products = @category.products
+    end
+
     def category_params
       params.require(:product_category).permit(:name)
     end

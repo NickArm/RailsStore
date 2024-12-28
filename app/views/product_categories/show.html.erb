@@ -1,0 +1,18 @@
+<h1><%= @category.name %></h1>
+
+<div class="row">
+  <% @products.each do |product| %>
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <% if product.main_photo.attached? %>
+          <%= image_tag product.main_photo, class: "card-img-top", alt: product.name %>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to product.name, product_path(product) %></h5>
+          <p class="card-text"><%= product.description.presence || "No description available" %></p>
+          <p class="card-text"><strong>Price:</strong> <%= number_to_currency(product.price) %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
