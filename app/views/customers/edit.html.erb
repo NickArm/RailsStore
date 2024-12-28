@@ -1,0 +1,63 @@
+<h1>Edit Your Personal Information</h1>
+
+<%= form_with model: @customer, url: customer_path, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :email, class: "form-label" %>
+    <%= form.email_field :email, class: "form-control" %>
+    </div>
+
+  <div class="mb-3">
+    <%= form.label :phone, class: "form-label" %>
+    <%= form.telephone_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :gender, class: "form-label" %>
+    <%= form.select :gender, [["Male", "male"], ["Female", "female"], ["Other", "other"]], { include_blank: "Select Gender" }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :birthday, class: "form-label" %>
+    <%= form.date_field :birthday, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :address, class: "form-label" %>
+    <%= form.text_field :address, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :postcode, class: "form-label" %>
+    <%= form.text_field :postcode, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :city, class: "form-label" %>
+    <%= form.text_field :city, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :country, class: "form-label" %>
+    <%= form.text_field :country, class: "form-control" %>
+  </div>
+
+  <h2>Update Your Password</h2>
+
+  <div class="mb-3">
+  <%= form.label :password, class: "form-label" %>
+  <%= form.password_field :password, class: "form-control", placeholder: "Leave blank to keep current password" %>
+</div>
+
+<div class="mb-3">
+  <%= form.label :password_confirmation, class: "form-label" %>
+  <%= form.password_field :password_confirmation, class: "form-control", placeholder: "Leave blank to keep current password" %>
+</div>
+
+
+  <%= form.submit "Save Changes", class: "btn btn-primary" %>
+<% end %>

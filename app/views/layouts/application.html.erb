@@ -108,6 +108,17 @@
                 <% end %>
               </ul>
             </li>
+            <li>
+            <div class="ms-auto">
+            <% if session[:customer_id] %>
+              <%= link_to "My Account", customer_path(session[:customer_id]), class: "btn btn-secondary me-2" %>
+              <%= button_to "Log Out", customer_session_path, method: :delete, class: "btn btn-danger" %>
+            <% else %>
+              <%= link_to "Register", new_registration_path, class: "btn btn-primary me-2" %>
+              <%= link_to "Log In", new_customer_session_path, class: "btn btn-secondary" %>
+            <% end %>
+          </div>
+          </li>
 
           </ul>
         </div>

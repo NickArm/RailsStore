@@ -1,0 +1,15 @@
+<h1>Welcome, <%= @customer.name %>!</h1>
+
+<h3>Your Personal Information</h3>
+<ul>
+  <li><strong>Name:</strong> <%= @customer.name %></li>
+  <li><strong>Phone:</strong> <%= @customer.phone.presence || "Not provided" %></li>
+  <li><strong>Gender:</strong> <%= @customer.gender.presence || "Not provided" %></li>
+  <li><strong>Birthday:</strong> <%= @customer.birthday.present? ? @customer.birthday.strftime("%B %d, %Y") : "Not provided" %></li>
+  <li><strong>Address:</strong> <%= @customer.address.presence || "Not provided" %></li>
+  <li><strong>Postcode:</strong> <%= @customer.postcode.presence || "Not provided" %></li>
+  <li><strong>City:</strong> <%= @customer.city.presence || "Not provided" %></li>
+  <li><strong>Country:</strong> <%= @customer.country.presence || "Not provided" %></li>
+</ul>
+
+<%= link_to "Edit Information", edit_customer_path, class: "btn btn-secondary" %>

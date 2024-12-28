@@ -11,6 +11,11 @@ Rails.application.routes.draw do
   resources :product_categories, only: [:index, :show]
   resources :pages
 
+    # Customer routes
+    resources :customers, only: [:show, :edit, :update]
+    resource :customer_session, only: [:new, :create, :destroy]
+    resources :registrations, only: [:new, :create]
+
   # Admin namespace
   namespace :admin do
     root "products#index"
