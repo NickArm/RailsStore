@@ -11,10 +11,9 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
   def load_categories_and_tags
     @categories = ProductCategory.all
     @tags = Tag.all
   end
-
 end

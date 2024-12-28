@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'home#index' # Public home page
+  root "home#index" # Public home page
 
   # User authentication
   resource :session, only: [:new, :create, :destroy]
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :products
     resources :product_categories
     resources :tags
-  end  
+  end
 
   # Health check
   get "up", to: "rails/health#show", as: :rails_health_check
