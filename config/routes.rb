@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   resources :product_categories, only: [:index, :show]
   resources :pages
 
+  # Wishlist
+  resources :wishlists, only: [:create, :destroy]
+
+
     # Customer routes
     resources :customers, only: [:show, :edit, :update]
     resource :customer_session, only: [:new, :create, :destroy]

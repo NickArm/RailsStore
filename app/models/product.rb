@@ -4,6 +4,9 @@ class Product < ApplicationRecord
 
     has_one_attached :main_photo
 
+    has_many :wishlists, dependent: :destroy
+  has_many :customers_with_wishlist, through: :wishlists, source: :customer
+
     validates :name, presence: true
     validates :sku, presence: true, uniqueness: true
     validates :price, numericality: { greater_than_or_equal_to: 0 }

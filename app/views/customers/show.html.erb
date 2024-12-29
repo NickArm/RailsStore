@@ -11,5 +11,18 @@
   <li><strong>City:</strong> <%= @customer.city.presence || "Not provided" %></li>
   <li><strong>Country:</strong> <%= @customer.country.presence || "Not provided" %></li>
 </ul>
+<h3>Your Wishlist</h3>
+<% if current_customer.wishlist_products.any? %>
+  <ul>
+    <% current_customer.wishlist_products.each do |product| %>
+      <li>
+        <%= link_to product.name, product_path(product) %>
+        <%= button_to "Remove from Wishlist", wishlist_path(product.id), method: :delete, class: "btn btn-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Your wishlist is empty.</p>
+<% end %>
 
 <%= link_to "Edit Information", edit_customer_path, class: "btn btn-secondary" %>

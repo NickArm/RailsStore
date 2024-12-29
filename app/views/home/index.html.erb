@@ -14,6 +14,14 @@
           </h5>
           <p class="card-text"><%= product.product_category.name %></p>
           <p class="card-text"><strong>Price:</strong> <%= number_to_currency(product.price) %></p>
+          <% if @wishlist_product_ids.include?(product.id) %>
+              <%= button_to "Remove from Wishlist", wishlist_path(product.id), method: :delete, class: "btn btn-danger" %>
+            <% else %>
+              <%= button_to "Add to Wishlist", wishlists_path(product_id: product.id), method: :post, class: "btn btn-primary" %>
+            <% end %>
+
+
+
           <!-- See More Button -->
           <%= link_to "See More", product_path(product), class: "btn btn-primary" %>
         </div>
