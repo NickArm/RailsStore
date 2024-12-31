@@ -20,5 +20,4 @@ class Admin::ProductsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_equal admin_root_path, path # Ensure it redirects to the admin dashboard
   end
-  
 end

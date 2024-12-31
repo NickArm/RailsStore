@@ -22,7 +22,6 @@ Rails.application.routes.draw do
 
   # Admin namespace
   namespace :admin do
-    
     resource :session, only: [:new, :create, :destroy]
     root "products#index"
     resources :products

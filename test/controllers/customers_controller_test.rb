@@ -2,12 +2,12 @@ require "test_helper"
 
 class CustomersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @customer = customers(:one) #It assigns a customer fixture (from test/fixtures/customers.yml) to the @customer instance variable.
+    @customer = customers(:one) # It assigns a customer fixture (from test/fixtures/customers.yml) to the @customer instance variable.
     login_as (@customer)
   end
 
   test "should get show" do
-    get customer_path(@customer) #The get method simulates a GET request to the customer_path for the customer fixture (@customer).
+    get customer_path(@customer) # The get method simulates a GET request to the customer_path for the customer fixture (@customer).
     assert_response :success # Ensures the response is 200 (success).
     assert_select "h1", "Welcome, #{@customer.name}!" # Update to match the actual output
   end
@@ -31,7 +31,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
   #   follow_redirect! # Follow the redirect.
   #   assert_match "Updated Name", response.body # Confirm the updated name is displayed.
   # end
-  
+
 
   private
 
@@ -39,5 +39,4 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
   def login_as(customer)
     post customer_session_path, params: { email: customer.email, password: "test_password" }
   end
-  
 end
