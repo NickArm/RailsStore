@@ -1,3 +1,4 @@
+# Then edit the migration file to look like this:
 class CreateSessionsTable < ActiveRecord::Migration[6.0]
   def change
     create_table :sessions do |t|

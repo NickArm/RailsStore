@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_29_071138) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_31_090635) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -95,12 +95,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_29_071138) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "ip_address"
-    t.string "user_agent"
+    t.string "session_id", null: false
+    t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_sessions_on_user_id"
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -130,7 +130,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_29_071138) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "products", "product_categories"
-  add_foreign_key "sessions", "users"
   add_foreign_key "wishlists", "customers"
   add_foreign_key "wishlists", "products"
 end

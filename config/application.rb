@@ -8,6 +8,10 @@ Bundler.require(*Rails.groups)
 
 module Store
   class Application < Rails::Application
+
+
+
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
@@ -23,5 +27,8 @@ module Store
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # config/application.rb
+    Rails.application.config.session_store :active_record_store, key: '_your_app_session'
   end
 end

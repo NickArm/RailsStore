@@ -1,12 +1,16 @@
 module Admin
-    class ApplicationController < ::ApplicationController
-      layout "admin"
-      before_action :authenticate_admin
+  class ApplicationController < ::ApplicationController
+    layout "admin"
+    before_action :authenticate_admin
 
-      def authenticate_admin
-        unless current_user&.admin?
-          redirect_to root_path, alert: "You are not authorized to access this page."
-        end
+    private
+
+    def authenticate_admin
+      return if request.path == new_admin_session_path
+
+      unless current_user&.admin?
+        redirect_to new_admin_session_path, alert: "You are not authorized to access this page."
       end
     end
+  end
 end

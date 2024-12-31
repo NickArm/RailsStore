@@ -22,8 +22,9 @@ Rails.application.routes.draw do
 
   # Admin namespace
   namespace :admin do
-    root "products#index"
+    
     resource :session, only: [:new, :create, :destroy]
+    root "products#index"
     resources :products
     resources :product_categories
     resources :tags

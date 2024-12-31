@@ -2,17 +2,17 @@ require "test_helper"
 
 class CustomerSessionsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
-    get customer_sessions_new_url
+    get new_customer_session_path # Correct route helper
     assert_response :success
   end
 
-  test "should get create" do
-    get customer_sessions_create_url
-    assert_response :success
+  test "should create session" do
+    post customer_session_path, params: { email: "test_customer@example.com", password: "password" }
+    assert_redirected_to customer_path(customers(:three)) # Redirect to the customer's show page.
   end
 
-  test "should get destroy" do
-    get customer_sessions_destroy_url
-    assert_response :success
+  test "should destroy session" do
+    delete customer_session_path # Simulate logout
+    assert_redirected_to root_path # Assuming logout redirects to root
   end
 end
