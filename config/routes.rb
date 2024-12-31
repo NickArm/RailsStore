@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     resources :product_categories
     resources :tags
     resources :pages
+    resources :customers, only: [:index]
   end
 
   # Health check
