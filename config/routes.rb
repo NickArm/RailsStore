@@ -20,6 +20,15 @@ Rails.application.routes.draw do
     resource :customer_session, only: [:new, :create, :destroy]
     resources :registrations, only: [:new, :create]
 
+    resource :cart, only: [:show] do
+      post "add_item", to: "carts#add_item"
+      delete "remove_item/:id", to: "carts#remove_item", as: "remove_item"
+      delete "clear", to: "carts#clear", as: "clear"
+    end
+
+
+
+
   # Admin namespace
   namespace :admin do
     resource :session, only: [:new, :create, :destroy]

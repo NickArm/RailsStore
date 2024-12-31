@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :current_customer
+  helper_method :current_user, :current_customer, :current_cart_count
   before_action :load_categories_and_tags
 
   # Current user (admin or general user)
@@ -25,6 +25,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def current_cart_count
+    cart = Cart.find_by(id: session[:cart_id])
+    cart&.cart_items.sum(:quantity) || 0
+  end
 
   # Load categories and tags for navigation or other purposes
   def load_categories_and_tags

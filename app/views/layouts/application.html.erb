@@ -108,6 +108,12 @@
                 <% end %>
               </ul>
             </li>
+            <!-- Cart -->
+            <li class="nav-item">
+            <%= link_to "Cart (#{current_cart_count})", cart_path, class: "btn btn-warning ms-2" %>
+      
+            </li>
+
             <li>
             <div class="ms-auto">
             <% if session[:customer_id] %>

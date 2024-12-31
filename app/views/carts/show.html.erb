@@ -1,0 +1,33 @@
+<h1>Your Cart</h1>
+<% if @cart_items.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= number_to_currency(item.product.price) %></td>
+          <td><%= item.quantity %></td>
+          <td><%= number_to_currency(item.total_price) %></td>
+          <td>
+            <%= button_to "Remove", remove_item_cart_path(item), method: :delete, class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p><strong>Total:</strong> <%= number_to_currency(@cart_items.sum(&:total_price)) %></p>
+
+  <%= button_to "Clear Cart", clear_cart_path, method: :delete, class: "btn btn-warning" %>
+<% else %>
+  <p>Your cart is empty.</p>
+<% end %>

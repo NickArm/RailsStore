@@ -25,7 +25,4 @@ class Admin::SessionsController < Admin::ApplicationController
   def session_params
     params.permit(:email_address, :password)
   end
-
 end
-
-
