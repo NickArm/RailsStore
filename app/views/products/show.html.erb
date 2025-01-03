@@ -1,20 +1,26 @@
+<turbo-frame id="search_results">
 <div class="container mt-5">
   <div class="row">
+    <!-- Product Image Section -->
     <div class="col-md-6">
       <% if @product.main_photo.attached? %>
-        <%= image_tag @product.main_photo, class: "img-fluid rounded", alt: @product.name %>
+        <%= image_tag @product.main_photo, class: "img-fluid rounded shadow-lg", alt: @product.name %>
       <% else %>
-        <p class="text-muted">No photo available</p>
+        <div class="text-center text-muted border rounded p-4">
+          <i class="bi bi-camera" style="font-size: 3rem;"></i>
+          <p>No photo available</p>
+        </div>
       <% end %>
     </div>
 
+    <!-- Product Details Section -->
     <div class="col-md-6">
       <h1 class="text-primary"><%= @product.name %></h1>
-      <p><strong>Category:</strong> <%= @product.product_category.name %></p>
-      <p><strong>Tags:</strong> <%= @product.tags.map(&:name).join(", ") %></p>
-      <p><strong>SKU:</strong> <%= @product.sku %></p>
-      <p><strong>Description:</strong> <%= @product.description.presence || "No description available" %></p>
-      <p><strong>Price:</strong> 
+      <p><i class="bi bi-box-seam"></i> <strong>Category:</strong> <%= @product.product_category.name %></p>
+      <p><i class="bi bi-tags"></i> <strong>Tags:</strong> <%= @product.tags.map(&:name).join(", ") %></p>
+      <p><i class="bi bi-barcode"></i> <strong>SKU:</strong> <%= @product.sku %></p>
+      <p><i class="bi bi-file-text"></i> <strong>Description:</strong> <%= @product.description.presence || "No description available" %></p>
+      <p><i class="bi bi-currency-dollar"></i> <strong>Price:</strong> 
         <span id="product-price" data-base-price="<%= @product.price %>">
           <% if @variations.any? && @min_price != @max_price %>
             <%= number_to_currency(@min_price) %> - <%= number_to_currency(@max_price) %>
@@ -25,8 +31,9 @@
       </p>
 
       <% if @variations.any? %>
+      <!-- Variations Dropdown -->
       <div class="mt-4">
-        <h4>Available Variations</h4>
+        <h4><i class="bi bi-sliders"></i> Available Variations</h4>
         <form id="add-to-cart-form" action="<%= add_item_cart_path %>" method="post">
           <%= hidden_field_tag :product_id, @product.id %>
           <% @variations.group_by { |v| v.variation.name }.each do |variation_type, product_variations| %>
@@ -37,51 +44,59 @@
                 <% product_variations.each do |product_variation| %>
                   <% product_variation.product_variation_values.each do |value| %>
                     <option value="<%= product_variation.id %>" data-price="<%= product_variation.price %>">
-                      <%= value.variation_value.name %> - <%= product_variation.price %>
+                      <%= value.variation_value.name %> - <%= number_to_currency(product_variation.price) %>
                     </option>
                   <% end %>
                 <% end %>
               </select>
             </div>
           <% end %>
-          <button id="add-to-cart-btn" class="btn btn-primary" type="submit" disabled>Add to Cart</button>
+          <button id="add-to-cart-btn" class="btn btn-primary w-100" type="submit" disabled>
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
         </form>
       </div>
       <% else %>
-      <!-- When there are no variations, render the Add to Cart button enabled -->
+      <!-- Add to Cart Button -->
       <div class="mt-4">
         <%= form_with url: add_item_cart_path, method: :post, local: true do |f| %>
           <%= f.hidden_field :product_id, value: @product.id %>
-          <button id="add-to-cart-btn" class="btn btn-primary" type="submit">Add to Cart</button>
+          <button id="add-to-cart-btn" class="btn btn-primary w-100" type="submit">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
         <% end %>
       </div>
       <% end %>
     </div>
   </div>
-
+</turbo-frame>
   <!-- Similar Products Section -->
   <div class="mt-5">
-    <h3>Similar Products</h3>
+    <h3><i class="bi bi-boxes"></i> Similar Products</h3>
     <div class="row">
       <% @similar_products.each do |similar_product| %>
         <div class="col-md-4 mb-4">
-          <div class="card">
+          <div class="card shadow-sm">
             <% if similar_product.main_photo.attached? %>
               <%= link_to image_tag(similar_product.main_photo, class: "card-img-top", alt: similar_product.name), product_path(similar_product) %>
+            <% else %>
+              <div class="text-center text-muted border rounded p-4">
+                <i class="bi bi-camera" style="font-size: 2rem;"></i>
+                <p>No photo available</p>
+              </div>
             <% end %>
-            <div class="card-body">
+            <div class="card-body text-center">
               <h5 class="card-title">
                 <%= link_to similar_product.name, product_path(similar_product), class: "text-decoration-none" %>
               </h5>
-              <p class="card-text"><strong>Price:</strong> <%= number_to_currency(similar_product.price) %></p>
+              <p class="card-text"><i class="bi bi-currency-dollar"></i> <strong>Price:</strong> <%= number_to_currency(similar_product.price) %></p>
+              <%= link_to "View Details", product_path(similar_product), class: "btn btn-outline-primary btn-sm" %>
             </div>
           </div>
         </div>
       <% end %>
     </div>
   </div>
-
-  
 </div>
 
 <script>
@@ -98,9 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (allSelected) {
-      addToCartButton.removeAttribute("disabled"); // Enable the button
+      addToCartButton.removeAttribute("disabled");
     } else {
-      addToCartButton.setAttribute("disabled", true); // Disable the button
+      addToCartButton.setAttribute("disabled", true);
     }
   }
 

@@ -16,7 +16,23 @@ class ProductsController < ApplicationController
     else
       @min_price = @max_price = @product.price
     end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("search_results", partial: "products/show", locals: { product: @product }) }
+    end
   end
+
+  def search
+  if params[:query].present?
+    @products = Product.where("name LIKE :query OR description LIKE :query", query: "%#{params[:query]}%")
+  else
+    @products = []
+  end
+  render turbo_stream: turbo_stream.update("search_results", partial: "products/products", locals: { products: @products })
+end
+
+
 
 
 

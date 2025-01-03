@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "search_results" do %>
+    <%= render partial: "products/products", locals: { products: @products || [] } %>
+  <% end %>
+  

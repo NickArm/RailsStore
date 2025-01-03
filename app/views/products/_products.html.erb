@@ -1,0 +1,25 @@
+<div class="list-group">
+  <% if products.any? %>
+    <% products.each do |product| %>
+      <!-- Clickable row -->
+      <a href="<%= product_path(product) %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <!-- Thumbnail -->
+        <% if product.main_photo.attached? %>
+          <%= image_tag product.main_photo, class: "img-thumbnail me-3", style: "width: 80px; height: 80px;", alt: product.name %>
+        <% end %>
+
+        <!-- Product Details -->
+        <div class="flex-grow-1">
+          <h5 class="mb-1"><%= product.name %></h5>
+          <p class="mb-1 text-muted"><%= product.description.truncate(100) %></p>
+          <p class="mb-0"><strong>Price:</strong> <%= number_to_currency(product.price) %></p>
+        </div>
+      </a>
+    <% end %>
+  <% else %>
+    <!-- No results -->
+    <div class="text-center py-3">
+      <p class="text-muted">No products found for your search.</p>
+    </div>
+  <% end %>
+</div>

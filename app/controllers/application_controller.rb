@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user, :current_customer, :current_cart_count
   before_action :load_categories_and_tags
+  protect_from_forgery with: :exception
 
   # Current user (admin or general user)
   def current_user

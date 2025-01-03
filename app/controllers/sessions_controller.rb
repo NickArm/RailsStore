@@ -20,4 +20,3 @@ class SessionsController < ApplicationController
       redirect_to admin_session_path, notice: "Logged out successfully."
     end
 end
-
