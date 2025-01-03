@@ -1,5 +1,4 @@
-module Admin
-  class SessionsController < ApplicationController
+class SessionsController < ApplicationController
     def new
       # Renders the login form
     end
@@ -20,5 +19,5 @@ module Admin
       session[:user_id] = nil
       redirect_to admin_session_path, notice: "Logged out successfully."
     end
-  end
 end
+

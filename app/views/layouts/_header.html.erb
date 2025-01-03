@@ -1,0 +1,113 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container">
+    <!-- Logo or Store Name -->
+    <% logo = Setting.find_by(key: 'logo')&.value %>
+    <% site_name = Setting.find_by(key: 'site_name')&.value || "Store" %>
+    <% if logo.present? %>
+      <%= link_to image_tag(logo, alt: site_name, class: "navbar-brand-logo", height: "40"), root_path, class: "navbar-brand d-flex align-items-center" %>
+    <% else %>
+      <%= link_to site_name, root_path, class: "navbar-brand fw-bold fs-4" %>
+    <% end %>
+
+    <!-- Mobile Toggle Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <!-- Home -->
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class: "nav-link" %>
+        </li>
+
+        <!-- Categories Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="categoriesDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Categories
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+            <% ProductCategory.all.each do |category| %>
+              <li><%= link_to category.name, product_category_path(category), class: "dropdown-item" %></li>
+            <% end %>
+          </ul>
+        </li>
+
+        <!-- Tags Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="tagsDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Tags
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="tagsDropdown">
+            <% Tag.all.each do |tag| %>
+              <li><%= link_to tag.name, tag_path(tag), class: "dropdown-item" %></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Right-Side Buttons -->
+      <ul class="navbar-nav ms-auto d-flex align-items-center">
+        <!-- Cart Button -->
+        <li class="nav-item">
+          <%= link_to cart_path, class: "btn btn-warning d-flex align-items-center ms-2" do %>
+            <i class="bi bi-cart3 me-2"></i> Cart (<%= current_cart_count %>)
+          <% end %>
+        </li>
+
+        <!-- Account Links -->
+        <% if session[:customer_id] %>
+          <!-- My Account -->
+          <li class="nav-item">
+            <%= link_to customer_path(session[:customer_id]), class: "btn btn-outline-secondary ms-2 d-flex align-items-center" do %>
+              <i class="bi bi-person-circle me-2"></i> My Account
+            <% end %>
+          </li>
+
+          <!-- Logout -->
+          <li class="nav-item">
+            <%= button_to customer_session_path, method: :delete, class: "btn btn-danger ms-2 d-flex align-items-center" do %>
+              <i class="bi bi-box-arrow-right me-2"></i> Log Out
+            <% end %>
+          </li>
+        <% else %>
+          <!-- Register -->
+          <li class="nav-item">
+            <%= link_to new_registration_path, class: "btn btn-primary ms-2 d-flex align-items-center" do %>
+              <i class="bi bi-person-plus-fill me-2"></i> Register
+            <% end %>
+          </li>
+
+          <!-- Login -->
+          <li class="nav-item">
+            <%= link_to new_customer_session_path, class: "btn btn-outline-secondary ms-2 d-flex align-items-center" do %>
+              <i class="bi bi-box-arrow-in-right me-2"></i> Log In
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

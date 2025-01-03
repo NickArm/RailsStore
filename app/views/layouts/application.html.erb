@@ -1,36 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || Setting.find_by(key: 'site_name')&.value || "Store" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-
+    <%= render 'layouts/head' %>
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
 
     <% if flash[:notice] %>
       <div class="alert alert-success"><%= flash[:notice] %></div>
@@ -38,112 +13,15 @@
       <div class="alert alert-danger"><%= flash[:alert] %></div>
     <% end %>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <!-- Logo or Store Name -->
-        <% logo = Setting.find_by(key: 'logo')&.value %>
-        <% site_name = Setting.find_by(key: 'site_name')&.value || "Store" %>
-        <% if logo.present? %>
-          <%= link_to image_tag(logo, alt: site_name, class: "navbar-brand-logo"), root_path, class: "navbar-brand" %>
-        <% else %>
-          <%= link_to site_name, root_path, class: "navbar-brand" %>
-        <% end %>
-
-        <!-- Mobile Toggle Button -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <!-- Home -->
-            <li class="nav-item">
-              <%= link_to "Home", root_path, class: "nav-link" %>
-            </li>
-
-            <!-- Categories Dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"
-                href="#" id="categoriesDropdown"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false"
-              >
-                Categories
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                <% ProductCategory.all.each do |category| %>
-                  <li>
-                    <%= link_to category.name, product_category_path(category), class: "dropdown-item" %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-
-            <!-- Tags Dropdown -->
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="tagsDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Tags
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="tagsDropdown">
-                <% Tag.all.each do |tag| %>
-                  <li>
-                    <%= link_to tag.name, tag_path(tag), class: "dropdown-item" %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Pages
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="pagesDropdown">
-                <% Page.all.each do |page| %>
-                  <li><%= link_to page.title, page_path(page), class: "dropdown-item" %></li>
-                <% end %>
-              </ul>
-            </li>
-            <!-- Cart -->
-            <li class="nav-item">
-              <%= link_to "Cart (#{current_cart_count})", cart_path, class: "btn btn-warning ms-2" %>
-            </li>
-
-            <li>
-              <div class="ms-auto">
-                <% if session[:customer_id] %>
-                  <%= link_to "My Account", customer_path(session[:customer_id]), class: "btn btn-secondary me-2" %>
-                  <%= button_to "Log Out", customer_session_path, method: :delete, class: "btn btn-danger" %>
-                <% else %>
-                  <%= link_to "Register", new_registration_path, class: "btn btn-primary me-2" %>
-                  <%= link_to "Log In", new_customer_session_path, class: "btn btn-secondary" %>
-                <% end %>
-              </div>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-    </nav>
-
     <main class="container mt-4">
       <%= yield %>
+         <div class="text-center mt-4">
+      <p class="text-muted">
+        <%= Setting.find_by(key: 'site_description')&.value || "Welcome to our store!" %>
+      </p>
+    </div>
     </main>
 
-    <footer class="bg-light py-4 mt-5 text-center">
-      <p><%= Setting.find_by(key: 'site_description')&.value || "Welcome to our store!" %></p>
-    </footer>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

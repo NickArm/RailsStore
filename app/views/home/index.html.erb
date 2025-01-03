@@ -1,31 +1,47 @@
-<h1>Welcome to Our Store</h1>
+<h1 class="text-center my-4">Welcome to Our Store</h1>
 
 <div class="row">
   <% @products.each do |product| %>
     <div class="col-md-4 mb-4">
-      <div class="card">
-        <!-- Clickable Image -->
-        <% if product.main_photo.attached? %>
-          <%= link_to image_tag(product.main_photo, class: "card-img-top", alt: product.name), product_path(product) %>
-        <% end %>
-        <div class="card-body">
-          <!-- Clickable Title -->
-          <h5 class="card-title">
-            <%= link_to product.name, product_path(product), class: "text-decoration-none" %>
-          </h5>
-          <p class="card-text"><%= product.product_category.name %></p>
-          <p class="card-text"><strong>Price:</strong> <%= number_to_currency(product.price) %></p>
-          <% if @wishlist_product_ids.include?(product.id) %>
-              <%= button_to "Remove from Wishlist", wishlist_path(product.id), method: :delete, class: "btn btn-danger" %>
-            <% else %>
-              <%= button_to "Add to Wishlist", wishlists_path(product_id: product.id), method: :post, class: "btn btn-primary" %>
+      <div class="card shadow-sm">
+        <div class="position-relative">
+          <% if product.main_photo.attached? %>
+            <%= link_to product_path(product) do %>
+              <%= image_tag(product.main_photo, class: "card-img-top", alt: product.name) %>
             <% end %>
+          <% end %>
+          <!-- Wishlist Button -->
+          <div class="position-absolute top-0 end-0 m-2">
+            <% if @wishlist_product_ids.include?(product.id) %>
+              <%= button_to wishlists_path(product.id), method: :delete, class: "btn btn-danger btn-sm rounded-circle" do %>
+                <i class="bi bi-heart-fill"></i>
+              <% end %>
+            <% else %>
+              <%= button_to wishlists_path(product_id: product.id), method: :post, class: "btn btn-light btn-sm rounded-circle" do %>
+                <i class="bi bi-heart"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
 
-
-
-          <!-- See More Button -->
-          <%= link_to "See More", product_path(product), class: "btn btn-primary" %>
-          
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <%= link_to product.name, product_path(product), class: "text-decoration-none fw-bold text-dark" %>
+          </h5>
+          <p class="card-text text-muted mb-2">
+            <i class="bi bi-tags"></i> <%= product.product_category.name %>
+          </p>
+          <p class="card-text">
+            <strong>Price:</strong> <%= number_to_currency(product.price) %>
+          </p>
+          <div class="d-flex justify-content-center gap-2">
+            <%= link_to "See More", product_path(product), class: "btn btn-primary btn-sm" %>
+            <% if @wishlist_product_ids.include?(product.id) %>
+              <%= button_to "Remove from Wishlist", wishlist_path(product.id), method: :delete, class: "btn btn-danger btn-sm" %>
+            <% else %>
+              <%= button_to "Add to Wishlist", wishlists_path(product_id: product.id), method: :post, class: "btn btn-outline-primary btn-sm" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
