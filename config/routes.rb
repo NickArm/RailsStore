@@ -44,7 +44,7 @@ Rails.application.routes.draw do
         patch :update
       end
     end
-    
+
     resources :variations do
       resources :variation_values, only: [:new, :create, :edit, :update, :destroy]
     end
@@ -52,7 +52,6 @@ Rails.application.routes.draw do
     resources :products do
       resources :product_variations, only: [:create, :update, :destroy]
     end
-    
   end
 
   # Health check
