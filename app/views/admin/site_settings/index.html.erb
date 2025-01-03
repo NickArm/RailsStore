@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <h1>Admin Dashboard</h1>
+  <h2>Site Settings</h2>
+
+  <%= form_with url: admin_site_settings_path, method: :patch, local: true, multipart: true do %>
+    <div class="mb-3">
+      <%= label_tag :logo, "Logo Image" %>
+      <%= file_field_tag :logo, class: "form-control" %>
+      <% if @settings[:logo].present? %>
+        <div class="mt-2">
+          <img src="<%= @settings[:logo] %>" alt="Site Logo" class="img-thumbnail" style="max-width: 150px;">
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :name, "Site Name" %>
+      <%= text_field_tag :name, @settings[:name], class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :description, "Site Description" %>
+      <%= text_area_tag :description, @settings[:description], class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag :admin_email, "Admin Contact Email" %>
+      <%= email_field_tag :admin_email, @settings[:admin_email], class: "form-control" %>
+    </div>
+
+    <%= submit_tag "Save Settings", class: "btn btn-primary" %>
+  <% end %>
+</div>

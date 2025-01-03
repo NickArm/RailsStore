@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Store" %></title>
+    <title><%= content_for(:title) || Setting.find_by(key: 'site_name')&.value || "Store" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -32,7 +32,6 @@
 
   <body>
 
-  
     <% if flash[:notice] %>
       <div class="alert alert-success"><%= flash[:notice] %></div>
     <% elsif flash[:alert] %>
@@ -42,7 +41,13 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <!-- Logo or Store Name -->
-        <%= link_to "Store", root_path, class: "navbar-brand" %>
+        <% logo = Setting.find_by(key: 'logo')&.value %>
+        <% site_name = Setting.find_by(key: 'site_name')&.value || "Store" %>
+        <% if logo.present? %>
+          <%= link_to image_tag(logo, alt: site_name, class: "navbar-brand-logo"), root_path, class: "navbar-brand" %>
+        <% else %>
+          <%= link_to site_name, root_path, class: "navbar-brand" %>
+        <% end %>
 
         <!-- Mobile Toggle Button -->
         <button
@@ -113,21 +118,20 @@
             </li>
             <!-- Cart -->
             <li class="nav-item">
-            <%= link_to "Cart (#{current_cart_count})", cart_path, class: "btn btn-warning ms-2" %>
-      
+              <%= link_to "Cart (#{current_cart_count})", cart_path, class: "btn btn-warning ms-2" %>
             </li>
 
             <li>
-            <div class="ms-auto">
-            <% if session[:customer_id] %>
-              <%= link_to "My Account", customer_path(session[:customer_id]), class: "btn btn-secondary me-2" %>
-              <%= button_to "Log Out", customer_session_path, method: :delete, class: "btn btn-danger" %>
-            <% else %>
-              <%= link_to "Register", new_registration_path, class: "btn btn-primary me-2" %>
-              <%= link_to "Log In", new_customer_session_path, class: "btn btn-secondary" %>
-            <% end %>
-          </div>
-          </li>
+              <div class="ms-auto">
+                <% if session[:customer_id] %>
+                  <%= link_to "My Account", customer_path(session[:customer_id]), class: "btn btn-secondary me-2" %>
+                  <%= button_to "Log Out", customer_session_path, method: :delete, class: "btn btn-danger" %>
+                <% else %>
+                  <%= link_to "Register", new_registration_path, class: "btn btn-primary me-2" %>
+                  <%= link_to "Log In", new_customer_session_path, class: "btn btn-secondary" %>
+                <% end %>
+              </div>
+            </li>
 
           </ul>
         </div>
@@ -137,5 +141,9 @@
     <main class="container mt-4">
       <%= yield %>
     </main>
+
+    <footer class="bg-light py-4 mt-5 text-center">
+      <p><%= Setting.find_by(key: 'site_description')&.value || "Welcome to our store!" %></p>
+    </footer>
   </body>
 </html>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_02_130837) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_03_110009) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -137,6 +137,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_02_130837) do
     t.datetime "updated_at", null: false
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "admin_contact_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "key"
+    t.text "value"
   end
 
   create_table "tags", force: :cascade do |t|

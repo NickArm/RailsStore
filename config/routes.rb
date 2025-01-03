@@ -39,6 +39,12 @@ Rails.application.routes.draw do
     resources :pages
     resources :customers, only: [:index, :show]
     resources :variations
+    resources :site_settings, only: [:index] do
+      collection do
+        patch :update
+      end
+    end
+    
     resources :variations do
       resources :variation_values, only: [:new, :create, :edit, :update, :destroy]
     end
@@ -46,6 +52,7 @@ Rails.application.routes.draw do
     resources :products do
       resources :product_variations, only: [:create, :update, :destroy]
     end
+    
   end
 
   # Health check
