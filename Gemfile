@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "3.2.3"
 gem "cocoon"
 
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -59,6 +60,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "rack-mini-profiler"
 end
 
 group :test do

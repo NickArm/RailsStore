@@ -72,9 +72,7 @@ Rails.application.configure do
   config.logger = Logger.new(STDOUT)
   config.log_level = :debug
 
-  config.assets.debug = true
-  config.assets.digest = false
-  config.assets.compile = true
+
 
   Rails.application.config.assets.configure do |env|
     env.register_mime_type "application/javascript", extensions: [ ".js" ]
