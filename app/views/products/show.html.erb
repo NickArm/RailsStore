@@ -14,32 +14,74 @@
       <p><strong>Tags:</strong> <%= @product.tags.map(&:name).join(", ") %></p>
       <p><strong>SKU:</strong> <%= @product.sku %></p>
       <p><strong>Description:</strong> <%= @product.description.presence || "No description available" %></p>
-      <p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
-      <p><strong>Quantity:</strong> <%= @product.quantity %></p>
-      <%= button_to "Add to Cart", add_item_cart_path(product_id: @product.id), method: :post, class: "btn btn-primary" %>
-    </div>
-  </div>
+      <p><strong>Price:</strong> 
+        <span id="product-price" data-base-price="<%= @product.price %>">
+          <% if @variations.any? && @min_price != @max_price %>
+            <%= number_to_currency(@min_price) %> - <%= number_to_currency(@max_price) %>
+          <% else %>
+            <%= number_to_currency(@min_price) %>
+          <% end %>
+        </span>
+      </p>
 
-  <% if @similar_products.any? %>
-  <div class="mt-5">
-    <h3>Similar Products</h3>
-    <div class="row">
-      <% @similar_products.each do |similar_product| %>
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <% if similar_product.main_photo.attached? %>
-              <%= link_to image_tag(similar_product.main_photo, class: "card-img-top", alt: similar_product.name), product_path(similar_product) %>
-            <% end %>
-            <div class="card-body">
-              <h5 class="card-title">
-                <%= link_to similar_product.name, product_path(similar_product), class: "text-decoration-none" %>
-              </h5>
-              <p class="card-text"><strong>Price:</strong> <%= number_to_currency(similar_product.price) %></p>
+      <% if @variations.any? %>
+      <div class="mt-4">
+        <h4>Available Variations</h4>
+        <form id="add-to-cart-form" action="<%= add_item_cart_path %>" method="post">
+          <%= hidden_field_tag :product_id, @product.id %>
+          <% @variations.group_by { |v| v.variation.name }.each do |variation_type, product_variations| %>
+            <div class="mb-3">
+              <label class="form-label"><%= variation_type %></label>
+              <select class="form-select variation-select" name="product_variation_id">
+                <option value="">Select <%= variation_type %></option>
+                <% product_variations.each do |product_variation| %>
+                  <% product_variation.product_variation_values.each do |value| %>
+                    <option value="<%= product_variation.id %>" data-price="<%= product_variation.price %>">
+                      <%= value.variation_value.name %> - <%= product_variation.price %>
+                    </option>
+                  <% end %>
+                <% end %>
+              </select>
             </div>
-          </div>
-        </div>
+          <% end %>
+          <button id="add-to-cart-btn" class="btn btn-primary" type="submit" disabled>Add to Cart</button>
+        </form>
+      </div>
+      <% else %>
+      <!-- When there are no variations, render the Add to Cart button enabled -->
+      <div class="mt-4">
+        <%= form_with url: add_item_cart_path, method: :post, local: true do |f| %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <button id="add-to-cart-btn" class="btn btn-primary" type="submit">Add to Cart</button>
+        <% end %>
+      </div>
       <% end %>
     </div>
   </div>
-  <% end %>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dropdowns = document.querySelectorAll(".variation-select");
+  const addToCartButton = document.getElementById("add-to-cart-btn");
+
+  function updateButtonState() {
+    let allSelected = true;
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.value) {
+        allSelected = false;
+      }
+    });
+
+    if (allSelected) {
+      addToCartButton.removeAttribute("disabled"); // Enable the button
+    } else {
+      addToCartButton.setAttribute("disabled", true); // Disable the button
+    }
+  }
+
+  dropdowns.forEach(dropdown => {
+    dropdown.addEventListener("change", updateButtonState);
+  });
+});
+</script>

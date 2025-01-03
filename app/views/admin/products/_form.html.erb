@@ -1,6 +1,6 @@
-<%= form_with model: [:admin, product], local: true, class: "container mt-5" do |form| %>
+<%= form_with model: [:admin, product], local: true, data: { turbo: false } do |form| %>  <!-- Product Fields -->
   <div class="mb-3">
-    <%= form.label :name, class: "form-label" %>
+    <%= form.label :name, "Product Name", class: "form-label" %>
     <%= form.text_field :name, class: "form-control" %>
   </div>
 
@@ -39,7 +39,28 @@
     <%= form.number_field :quantity, class: "form-control" %>
   </div>
 
-  <div class="d-flex justify-content-between">
+
+  <h3>Product Variations</h3>
+  <div data-controller="nested-form">
+    <div data-nested-form-target="container">
+      <%= form.fields_for :product_variations do |pv| %>
+        <%= render "product_variation_fields", f: pv, variations: @variations, variation_values: @variation_values %>
+      <% end %>
+    </div>
+
+    <template data-nested-form-target="template">
+      <%= form.fields_for :product_variations, ProductVariation.new, child_index: "NEW_RECORD" do |pv| %>
+        <%= render "product_variation_fields", f: pv, variations: @variations, variation_values: @variation_values %>
+      <% end %>
+    </template>
+
+    <button type="button" class="btn btn-success" data-action="nested-form#add">
+      Add Variation
+    </button>
+  </div>
+
+
+  <div class="d-flex justify-content-between mt-3">
     <%= link_to "Back to Products", admin_products_path, class: "btn btn-secondary" %>
     <%= form.submit "Save Product", class: "btn btn-primary" %>
   </div>

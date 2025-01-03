@@ -38,6 +38,14 @@ Rails.application.routes.draw do
     resources :tags
     resources :pages
     resources :customers, only: [:index, :show]
+    resources :variations
+    resources :variations do
+      resources :variation_values, only: [:new, :create, :edit, :update, :destroy]
+    end
+
+    resources :products do
+      resources :product_variations, only: [:create, :update, :destroy]
+    end
   end
 
   # Health check

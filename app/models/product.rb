@@ -7,8 +7,9 @@ class Product < ApplicationRecord
     has_many :wishlists, dependent: :destroy
   has_many :customers_with_wishlist, through: :wishlists, source: :customer
 
-    validates :name, presence: true
-    validates :sku, presence: true, uniqueness: true
-    validates :price, numericality: { greater_than_or_equal_to: 0 }
-    validates :quantity, numericality: { greater_than_or_equal_to: 0 }
+  has_many :product_variations, dependent: :destroy
+  accepts_nested_attributes_for :product_variations, allow_destroy: true
+
+
+  validates :name, :price, :sku, presence: true
 end

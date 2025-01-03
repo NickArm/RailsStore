@@ -1,0 +1,31 @@
+<div data-new-record="<%= f.object.new_record? %>" class="card mb-3 shadow-sm nested-fields">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <%= f.label :variation_id, "Select Variation", class: "form-label" %>
+        <%= f.collection_select :variation_id, variations, :id, :name, { prompt: "Choose Variation" }, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :price, "Variation Price", class: "form-label" %>
+        <%= f.number_field :price, step: 0.01, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :quantity, "Variation Quantity", class: "form-label" %>
+        <%= f.number_field :quantity, class: "form-control" %>
+      </div>
+    </div>
+
+    <h6 class="mt-3">Variation Values</h6>
+    <%= f.fields_for :product_variation_values do |pvv| %>
+      <div class="mb-3">
+        <%= pvv.label :variation_value_id, "Select Value", class: "form-label" %>
+        <%= pvv.collection_select :variation_value_id, variation_values, :id, :name, { prompt: "Choose Value" }, class: "form-control" %>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :_destroy %>
+    <button type="button" class="btn btn-danger mt-3" data-action="nested-form#remove">
+      Remove Variation
+    </button>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_31_100741) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_02_130837) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -55,6 +55,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_31_100741) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "product_variation_id"
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
     t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
@@ -90,6 +91,26 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_31_100741) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "product_variation_values", force: :cascade do |t|
+    t.integer "product_variation_id", null: false
+    t.integer "variation_value_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_variation_id"], name: "index_product_variation_values_on_product_variation_id"
+    t.index ["variation_value_id"], name: "index_product_variation_values_on_variation_value_id"
+  end
+
+  create_table "product_variations", force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.decimal "price"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "variation_id"
+    t.index ["product_id"], name: "index_product_variations_on_product_id"
+    t.index ["variation_id"], name: "index_product_variations_on_variation_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -133,6 +154,22 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_31_100741) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "variation_values", force: :cascade do |t|
+    t.integer "variation_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["variation_id"], name: "index_variation_values_on_variation_id"
+  end
+
+  create_table "variations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "parent_variation_id"
+    t.index ["parent_variation_id"], name: "index_variations_on_parent_variation_id"
+  end
+
   create_table "wishlists", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "product_id", null: false
@@ -146,7 +183,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_31_100741) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
+  add_foreign_key "product_variation_values", "product_variations"
+  add_foreign_key "product_variation_values", "variation_values"
+  add_foreign_key "product_variations", "products"
+  add_foreign_key "product_variations", "variations"
   add_foreign_key "products", "product_categories"
+  add_foreign_key "variation_values", "variations"
+  add_foreign_key "variations", "variations", column: "parent_variation_id"
   add_foreign_key "wishlists", "customers"
   add_foreign_key "wishlists", "products"
 end

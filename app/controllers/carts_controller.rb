@@ -8,15 +8,38 @@ class CartsController < ApplicationController
   def add_item
     @cart ||= initialize_cart
     product = Product.find(params[:product_id])
-    cart_item = @cart.cart_items.find_or_initialize_by(product: product)
+    product_variation_id = params[:product_variation_id].presence
+
+    cart_item = @cart.cart_items.find_or_initialize_by(
+      product: product,
+      product_variation_id: product_variation_id
+    )
     cart_item.quantity = (cart_item.quantity || 0) + 1
 
     if cart_item.save
-      redirect_to cart_path, notice: "#{product.name} was added to your cart."
+      variation_info = if cart_item.product_variation
+                         variation = cart_item.product_variation.variation
+                         value = cart_item.product_variation.product_variation_values.first&.variation_value&.name
+                         "#{variation.name}: #{value}" if variation && value
+      else
+                         "No Variation"
+      end
+
+      redirect_to cart_path, notice: "#{product.name} (Variation: #{variation_info}) was added to your cart."
     else
       redirect_to product_path(product), alert: "Failed to add item to cart."
     end
   end
+
+
+
+
+
+
+
+
+
+
 
 
     def remove_item

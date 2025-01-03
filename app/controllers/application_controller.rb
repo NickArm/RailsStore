@@ -28,8 +28,11 @@ class ApplicationController < ActionController::Base
 
   def current_cart_count
     cart = Cart.find_by(id: session[:cart_id])
-    cart&.cart_items.sum(:quantity) || 0
+    return 0 unless cart # If no cart exists, return 0
+
+    cart.cart_items.sum(:quantity) || 0
   end
+
 
   # Load categories and tags for navigation or other purposes
   def load_categories_and_tags

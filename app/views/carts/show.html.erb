@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>Product</th>
+        <th>Variation</th>
         <th>Price</th>
         <th>Quantity</th>
         <th>Total</th>
@@ -14,7 +15,16 @@
       <% @cart_items.each do |item| %>
         <tr>
           <td><%= item.product.name %></td>
-          <td><%= number_to_currency(item.product.price) %></td>
+          <td>
+            <% if item.product_variation %>
+              <% variation = item.product_variation.variation %>
+              <% value = item.product_variation.product_variation_values.first&.variation_value&.name %>
+              <%= "#{variation.name}: #{value}" if variation && value %>
+            <% else %>
+              No Variation
+            <% end %>
+          </td>
+          <td><%= number_to_currency(item.product_variation&.price || item.product.price) %></td>
           <td><%= item.quantity %></td>
           <td><%= number_to_currency(item.total_price) %></td>
           <td>

@@ -1,0 +1,29 @@
+<h1>Variations</h1>
+
+<%= link_to "New Variation", new_admin_variation_path, class: "btn btn-primary mb-3" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Values</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @variations.each do |variation| %>
+      <tr>
+        <td><%= variation.name %></td>
+        <td>
+          <% variation.variation_values.each do |value| %>
+            <span class="badge bg-info text-dark"><%= value.name %></span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_admin_variation_path(variation), class: "btn btn-warning btn-sm" %>
+          <%= button_to "Delete", admin_variation_path(variation), method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
